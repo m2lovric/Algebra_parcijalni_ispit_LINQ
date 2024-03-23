@@ -1,4 +1,6 @@
-﻿namespace Ispit.Konzola;
+﻿using Ispit.Model.Klase;
+
+namespace Ispit.Konzola;
 using Ispit.Model;
 
 class Program
@@ -13,15 +15,15 @@ class Program
             where milijunas.Stanje >= 1000000
             group milijunas by milijunas.Banka 
             into grupaMilijunasa
-            select new
+            select new GrupiraniMilijunasi()
             {
                 Banka = grupaMilijunasa.Key,
-                Milijunasi = string.Join(" i ", grupaMilijunasa.Select(k => k.ImePrezime)) 
+                Milijunasi = grupaMilijunasa.Select(k => k.ImePrezime) 
             };
 
         foreach (var k in GrupirajPremaBanci)
         {
-            Console.WriteLine($"{k.Banka}: {k.Milijunasi}");
+            Console.WriteLine($"{k.Banka}: {string.Join(" i ", k.Milijunasi.Select(c => c)).ToString() }");
         }
 
         Console.WriteLine();
